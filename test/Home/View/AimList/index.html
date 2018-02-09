@@ -1,0 +1,205 @@
+<extend name="Public:app" />
+<block name="content">
+<main>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Parameters Screening</h3>
+            </div>
+            <form action="{:U('AimList/index')}" method="POST"  class="form-horizontal">
+                <input type="hidden" name="site" value="{$site}" id="site">
+                <input type="hidden" name="page" value="" id="page">
+                <input type="hidden" name="limit" value="50" id="limit">
+                <div class="panel-body">
+                    <!--<div class="form-inline">
+                        <span><b>site：</b></span>
+                        <select name="site" class="form-control">
+                            <volist name="sites" id="vo" >
+                                <option value="{$key}" <eq name="search.site" value="$key">selected="selected"</eq>>{$key}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <br>-->
+                    <div class="form-inline">
+                        <span><b>LP：</b></span>
+                        <input type="text" class="input-sm form-control" name="lp" value="{$search.lp}" placeholder="请输入页面URL"/>&emsp;
+                        <span><b>Pos-目标值：</b></span>
+                        <select name="aim_pos" class="form-control">
+                            <option value="">--请选择--</option>
+                            <option value="Y" <eq name="search.aim_pos" value="Y">selected="selected"</eq>>Y</option>
+                            <option value="N" <eq name="search.aim_pos" value="N">selected="selected"</eq>>N</option>
+                        </select>&emsp;
+                        <span><b>CTR-目标值：</b></span>
+                        <select name="aim_ctr" class="form-control">
+                            <option value="">--请选择--</option>
+                            <option value="Y" <eq name="search.aim_ctr" value="Y">selected="selected"</eq>>Y</option>
+                            <option value="N" <eq name="search.aim_ctr" value="N">selected="selected"</eq>>N</option>
+                        </select>&emsp;
+                        <span><b>BR-目标值：</b></span>
+                        <select name="aim_br" class="form-control">
+                            <option value="">--请选择--</option>
+                            <option value="Y" <eq name="search.aim_br" value="Y">selected="selected"</eq>>Y</option>
+                            <option value="N" <eq name="search.aim_br" value="N">selected="selected"</eq>>N</option>
+                        </select>&emsp;
+                    </div><br>
+                    <div class="form-inline">
+                        <span><b>Metrics Sort Order：</b></span>
+                        <select name="order" class="form-control">
+                            <option value="" >--请选择--</option>
+                            <option value="page_rank" <eq name="search.order" value="page_rank">selected="selected"</eq>>Page Rank</option>
+                            <option value="search_value" <eq name="search.order" value="search_value">selected="selected"</eq>>搜索需求价值</option>
+                            <option value="SERP_POS" <eq name="search.order" value="SERP_POS">selected="selected"</eq>>Pos 实际值</option>
+                            <option value="aim_revenue" <eq name="search.order" value="aim_revenue">selected="selected"</eq>>预计收入增长</option>
+                        </select>&emsp;
+                        <span><b>Sort By：</b></span>
+                        <select name="sort" class="form-control">
+                            <option value="desc" <eq name="search.sort" value="desc">selected="selected"</eq>>DESC</option>
+                            <option value="asc"  <eq name="search.sort" value="asc">selected="selected"</eq>>ASC</option>
+                        </select>
+                    </div><br>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success col-sm-offset-2 " id="btn">确定</button>
+                </div>
+            </form>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">站点页面目标值管理列表</h3>
+            </div>
+            <div class="panel-body">
+            <table class="table table-striped table-bordered table-hover mytable" >
+                <thead>
+                <tr role="row">
+                    <!-- <th>全选
+                         <input type="checkbox" name="checkAll">
+                     </th>-->
+                    <th>LandingPage</th>
+                    <th>Page Rank</th>
+                    <th>搜索需求价值</th>
+                    <th>Pos-实际值</th>
+                    <th>Pos-目标值</th>
+                    <th>预计收入增长</th>
+                    <th>CTR实际值</th>
+                    <th>目标Pos对应CTR值</th>
+                    <th>CTR目标值</th>
+                    <th>BR实际值</th>
+                    <th>目标Pos对应BR值</th>
+                    <th>BR目标值</th>
+                    <th>Content有无Code</th>
+                    <th>Content数量</th>
+                    <th>Content更新偏移</th>
+                    <th>Operate</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="termList" id="vo" >
+                    <tr>
+                        <!--<td>{$vo.UUID}</td>-->
+                        <td>{$vo.URL}</td>
+                        <td>{$vo.page_rank}</td>
+                        <td>{$vo.search_value}</td>
+                        <td>{$vo.SERP_POS}</td>
+                        <td>{$vo.aim_pos}</td>
+                        <td>{$vo.aim_revenue}</td>
+                        <td>{$vo.SERP_CTR}</td>
+                        <td>{$vo.aim_pos_ctr}</td>
+                        <td>{$vo.aim_ctr}</td>
+                        <td>{$vo.LP_BR}</td>
+                        <td>{$vo.aim_pos_br}</td>
+                        <td>{$vo.aim_br}</td>
+                        <td>{$vo.aim_coupon}</a></td>
+                        <td>{$vo.aim_promo}</td>
+                        <td>{$vo.aim_offset}</td>
+                        <td>
+                            <eq name="vo.aim_exist" value="Y">
+
+                                <a class="btn btn-success col-sm-offset-2" href=" <eq name="type" value="merchant">http://oi.meikaiinfotech.com/form-entity/add?form_id=59a90cd0c2e26&uuid={$vo.UUID}<else/>http://oi.meikaiinfotech.com/form-entity/add?form_id=59a90cd02a1b0&uuid={$vo.UUID}</eq>" >edit</a>
+
+                                <else/>
+
+                                <a class="btn btn-success col-sm-offset-2" href="<eq name="type" value="merchant">http://oi.meikaiinfotech.com/form-entity/add?form_id=59a90ce169c7f&form_attr[59a50a7ea0219][COUPON_PAGE_ID]={$vo.UUID}<else/>http://oi.meikaiinfotech.com/form-entity/add?form_id=59a90ce0cb943&form_attr[59a50c6808c50][COUPON_PAGE_ID]={$vo.UUID}</eq>">add</a>
+
+                            </eq>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+                <if condition="$pageList.pages gt 1 ">
+                    <nav aria-label="Page navigation" class="pull-right">
+                        <p class="page_total pull-left">共 {$pageList.total} 条数据</p>
+                        <ul class="pagination">
+                            <li class="prev">
+                                <a href="#" aria-label="Previous" >
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <for start="$pageList.startPage" end="$pageList.endPage">
+                                <li <eq name="pageList.page" value="$i">class='active page'<else/>class='page'</eq> ><a href="#">{$i}</a></li>
+                            </for>
+
+                            <li class="next">
+                                <a href="#" aria-label="Next" >
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </if>
+        </div>
+
+        </div>
+
+
+    </div>
+</main>
+</block>
+<block name="custome-css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC3/css/bootstrap-datepicker.min.css">
+</block>
+<block name="custome-js">
+    <script src="//cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC3/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(function() {
+            $( "#datepick" ).datepicker({
+                format: 'yyyy-mm-dd',
+                defaultDate : new Date()
+            });
+        });
+        $('.page').click(function(){
+            var page = $(this).find('a').text();
+            $('#page').val(page);
+            $('form').submit();
+        })
+        $('.prev').click(function(){
+            var page = $(this).parent().find('.active a').text();
+            page = parseInt(page)-1;
+            $('#page').val(page);
+            $('form').submit();
+        })
+        $('.next').click(function(){
+            var page = $(this).parent().find('.active a').text();
+            page = parseInt(page)+1;
+            $('#page').val(page);
+            $('form').submit();
+        })
+        $('.subSite').click(function(){
+            let obj = $(this).children('a')
+            let siteName = obj.html()
+            let siteUUID = $(this).attr('data-uuid')
+            $('.globalSiteName').html(siteName)
+            $('.globalSiteName').attr('data-uuid', siteUUID)
+            setCookie('SITE_NAME', siteName)
+            setCookie('SITE_UUID', siteUUID)
+            $('#site').val(siteName);
+            $('form').submit();
+
+        })
+        $('#btn').click(function(){
+            var siteName = $('.globalSiteName').text();
+            $('#site').val(siteName);
+            $('form').submit();
+        })
+    </script>
+</block>

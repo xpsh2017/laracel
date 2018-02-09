@@ -1,0 +1,234 @@
+<extend name="Public:app" />
+<block name="content">
+<main>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left" style="margin-right: 15px;">指标筛选
+                </h3>
+               <!-- <a class=" btn btn-xs btn-success pull-left" style="margin-right: 5px;"  href="javascript:;" id="pre_day"> <i class="glyphicon glyphicon-chevron-left"></i> 前一天 </a>
+                <a class=" btn btn-xs btn-success pull-left" style="margin-right: 5px;" href="javascript:;" id="next_day"> 后一天 <i class="glyphicon glyphicon-chevron-right"></i> </a>
+                --><div class="clearfix"></div>
+            </div>
+            <form action="{:U('OperationState/index')}" method="POST"  class="form-horizontal">
+                <input type="hidden" name="site" value="{$site}" id="site">
+                <input type="hidden"  name='date' value="{$date}" id="date">
+                <input type="hidden" name="page" value="" id="page">
+                <input type="hidden" name="limit" value="100" id="limit">
+                <input type="hidden"  value="{$uuidList}" id="uuidList">
+                <input type="hidden"  value="{$type}" id="type">
+                <input type="hidden"  name="pre" value="" id="p">
+                <input type="hidden"  name="next" value="" id="n">
+                <div class="panel-body">
+                    <!--<div class="form-inline">
+                        <span><b>site：</b></span>
+                        <select name="site" class="form-control">
+                            <volist name="sites" id="vo" >
+                                <option value="{$key}" <eq name="search.site" value="$key">selected="selected"</eq>>{$key}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <br>-->
+                    <div class="form-inline">
+                        <span><b>Date：</b></span>
+                        <div class="input-daterange input-group datepicker">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            <input type="text" class="input-sm form-control datepicker" name="start" value="{$start}"/>
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="input-sm form-control datepicker" name="date" value="{$date}" />
+                        </div>&emsp;
+                        <span><b>AFF：</b></span>
+                        <select name="HAS_AFFILIATE" class="form-control">
+                            <option value="">--请选择--</option>
+                            <option value="Y" <eq name="search.HAS_AFFILIATE" value="Y">selected="selected"</eq>>Y</option>
+                            <option value="N" <eq name="search.HAS_AFFILIATE" value="N">selected="selected"</eq>>N</option>
+                        </select>&emsp;
+                        <span><b>CODE：</b></span>
+                        <select name="CODES" class="form-control">
+                            <option value="">--请选择--</option>
+                            <option value="Y" <eq name="search.CODES" value="Y">selected="selected"</eq>>Y</option>
+                            <option value="N" <eq name="search.CODES" value="N">selected="selected"</eq>>N</option>
+                        </select>&emsp;
+
+                    </div><br>
+                    <div class="form-inline">
+                        <span><b>Metrics Sort Order：</b></span>
+                        <select name="order" class="form-control">
+                            <option value="REVENUE" <eq name="search.order" value="REVENUE">selected="selected"</eq>>REVENUE</option>
+                            <option value="POSITION" <eq name="search.order" value="POSITION">selected="selected"</eq>>POSTION</option>
+                            <option value="SESSION" <eq name="search.order" value="SESSION">selected="selected"</eq>>SESSIONS</option>
+                            <option value="IMPRESSION" <eq name="search.order" value="IMPRESSION">selected="selected"</eq>>IMPRESSIONS</option>
+                            <option value="SV" <eq name="search.order" value="SV">selected="selected"</eq>>SV</option>
+                            <option value="RPI" <eq name="search.order" value="RPI">selected="selected"</eq>>RPI</option>
+                        </select>&emsp;
+                        <span><b>Sort By：</b></span>
+                        <select name="sort" class="form-control">
+                            <option value="desc" <eq name="search.sort" value="desc">selected="selected"</eq>>DESC</option>
+                            <option value="asc"  <eq name="search.sort" value="asc">selected="selected"</eq>>ASC</option>
+                        </select>
+                    </div><br>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success col-sm-offset-2 " id="btn">确定</button>
+                </div>
+            </form>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">网页运营状态列表</h3>
+            </div>
+            <!--<div class="panel-body">-->
+            <table class="table table-striped table-bordered table-hover mytable" >
+                <thead>
+                <tr role="row">
+                     <!--<th>全选
+                         <input type="checkbox" name="checkAll">
+                     </th>-->
+                    <th>LandingPage</th>
+                    <th>IMPRESSIONS</th>
+                    <th>POSITION</th>
+                    <th>CTR</th>
+                    <th>SV</th>
+                    <th>BR</th>
+                    <th>DURATION</th>
+                    <th>PAGE/SESSION</th>
+                    <th>SESSIONS</th>
+                    <th>OUTCLICKS</th>
+                    <th>REVENUE</th>
+                    <th>RPI</th>
+                    <th>AFF</th>
+                    <th>CODES#</th>
+                    <th>PROMO#</th>
+                    <th>INTERNAL LINKS</th>
+                    <th>OPERATION</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="termList" id="vo" >
+                    <tr>
+                        <td>{$vo.URL}</td>
+                        <td>{$vo.IMPRESSION}</td>
+                        <td>{$vo.POSITION}</td>
+                        <td>{$vo.CTR}</td>
+                        <td>{$vo.SV}</td>
+                        <td>{$vo.BR}</td>
+                        <td>{$vo.DURATION}</td>
+                        <td>{$vo.PAGE_PER_SESSION}</td>
+                        <td>{$vo.SESSION}</td>
+                        <td>{$vo.OUTCLICK}</td>
+                        <td>{$vo.REVENUE}</td>
+                        <td>{$vo.RPI}</td>
+                        <td>{$vo.HAS_AFFILIATE}</td>
+                        <td>{$vo.CODES}</td>
+                        <td>{$vo.PROMOS}</td>
+                        <td>{$vo.INTERNAL_LINKS}</td>
+                        <td><a href="{:U('OperationState/detail',array(uuid=>$vo['COUPON_PAGE_ID'],type=>$type,date=>$date))}">查看详情</a></td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+        <if condition="$pageList.pages gt 1 ">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="prev">
+                        <a href="#" aria-label="Previous" >
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <for start="$pageList.startPage" end="$pageList.endPage">
+                        <li <eq name="pageList.page" value="$i">class='active page'<else/>class='page'</eq> ><a href="#">{$i}</a></li>
+                    </for>
+
+                    <li class="next">
+                        <a href="#" aria-label="Next" >
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </if>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div id="main" style="width: 600px;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+</main>
+</block>
+<block name="custome-css">
+    <script src="/node_modules/echarts.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC3/css/bootstrap-datepicker.min.css">
+</block>
+<block name="custome-js">
+    <script src="//cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC3/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(function() {
+
+            $( ".datepicker" ).datepicker({
+                format: 'yyyy-mm-dd',
+                defaultDate : new Date(),
+                autoclose: true
+            });
+
+            var uuidList = $('#uuidList').val();
+            var type = $('#type').val();
+            var date =$('#date').val();
+            //$('.globalSiteDate').text(date);
+            if(uuidList !=''){
+                $.post("{:U('PosList/get_meta_data')}", { "uuidList": uuidList,"type":'MetaTitle',"date":date},
+                        function(data){
+                            for(var key in data){
+                                $("#Title_"+key).html(data[key]);
+                            }
+                        }, 'json');
+            }
+        });
+        $('.subSite').click(function(){
+            let obj = $(this).children('a')
+            let siteName = obj.html()
+            let siteUUID = $(this).attr('data-uuid')
+            $('.globalSiteName').html(siteName)
+            $('.globalSiteName').attr('data-uuid', siteUUID)
+            setCookie('SITE_NAME', siteName)
+            setCookie('SITE_UUID', siteUUID)
+            $('#site').val(siteName);
+            $('form').submit();
+
+        })
+        $('#btn').click(function(){
+            var siteName = $('.globalSiteName').text();
+            $('#site').val(siteName);
+            $('form').submit();
+        })
+
+        $('.page').click(function(){
+            var page = $(this).find('a').text();
+            $('#page').val(page);
+            $('form').submit();
+        })
+        $('.prev').click(function(){
+            var page = $(this).parent().find('.active a').text();
+            page = parseInt(page)-1;
+            $('#page').val(page);
+            $('form').submit();
+        })
+        $('.next').click(function(){
+            var page = $(this).parent().find('.active a').text();
+            page = parseInt(page)+1;
+            $('#page').val(page);
+            $('form').submit();
+        })
+        $('#pre_day').click(function(){
+            $('#p').val(1);
+            $('form').submit();
+        })
+        $('#next_day').click(function(){
+            $('#n').val(1);
+            $('form').submit();
+        })
+
+    </script>
+</block>

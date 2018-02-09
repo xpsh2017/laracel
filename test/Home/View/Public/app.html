@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{$Think.config.SITE_NAME}</title>
+
+    <!-- Bootstrap -->
+    <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css?ver={:getVersion()}">
+    <link rel="shortcut icon" href="__PUBLIC__/bitbug_favicon.ico" type="image/x-icon" />
+    <block name="custome-css"></block>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="open-menu">
+      <i class="glyphicon glyphicon-menu-right"></i>
+    </div>
+    <nav class="navbar navbar-default my-navbar">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{:U('/')}">{$Think.config.SITE_NAME}</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown" class="active">
+              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="globalSiteName" data-uuid="{:defaultSite()['SITE_UUID']}">{:defaultSite()['SITE_NAME']}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <volist name=":siteList()" id="vo">
+                  <li class="subSite" data-uuid="{$vo.SITE_UUID}"><a href="javascript:;">{$vo.SITE_NAME}</a></li>
+                </volist>
+              </ul>
+            </li>
+            <if condition="$Think.const.CONTROLLER_NAME eq 'SiteDaily' ">
+              <li class="dropdown">
+                <a href="javascript:;" class="dropdown-toggle selectDate" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-uuid="{:defaultSite()['SITE_UUID']}">
+                  <span class="globalSiteDate">{:defaultSite()['SITE_DATE']}</span>
+                </a>
+                <div class="dropdown-menu">
+                  <div id="datepicker" data-date="{:defaultSite()['SITE_DATE']}"></div>
+                </div>
+              </li>
+            </if>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$Think.server.php_auth_user} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <main class="container-fluid">
+        <div class="row">
+            <div id="menu_block" class="col-md-2">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title pull-left"><span class="menu-text">导航栏</span></h3>
+                  <a href="javascript:;" class="pull-right menu-close"><i class="glyphicon glyphicon-menu-left"></i></a>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="list-group">
+                  <a href="{:U('SiteDaily/Index')}" class="list-group-item">站点日报</a>
+                  <a href="{:U('Competitor/Index')}" class="list-group-item">竞争状态</a>
+                  <!--<a class="list-group-item" data-toggle="collapse" href="#collapse_1" aria-expanded="false" aria-controls="collapse_1">BenchMark management <span class="caret"></span></a>
+                  <div class="collapse" id="collapse_1">
+                    <div class="panel sub-panel">
+                      <div class="list-group">
+                        <a href="{:U('PosList/index')}" class="list-group-item">PosList</a>
+                        <a href="{:U('CtrList/Index')}" class="list-group-item">CtrList</a>
+                        <a href="{:U('BrList/Index')}" class="list-group-item">BrList</a>
+
+                      </div>
+                    </div>
+                  </div>-->
+                  <a href="{:U('PosList/index')}" class="list-group-item">POS报警</a>
+                  <a href="{:U('CtrList/Index')}" class="list-group-item">SERP CTR报警</a>
+                  <a href="{:U('BrList/Index')}" class="list-group-item">BR报警</a>
+                  <a href="{:U('AimList/Index')}" class="list-group-item">目标值管理工具</a>
+                  <a href="{:U('OperationState/Index')}" class="list-group-item">网页运营状态报表</a>
+                </div>
+              </div>
+          </div>
+          <div id="main_block" class="col-md-10">
+            <block name="content"></block>
+          </div>
+        </div>
+    </main>
+    <footer>
+      <div class="container-fluid">
+        <p class="text-center">TEG PMI {$Think.config.SITE_VERSION}</p>
+      </div>
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/js-cookie/src/js.cookie.js"></script>
+    <script src="__PUBLIC__/js/app.js?ver={:getVersion()}"></script>
+    <block name="custome-js"></block>
+  </body>
+</html>
