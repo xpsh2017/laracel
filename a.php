@@ -574,11 +574,7 @@ else
 
 </form>
 
-
-<div id="footer">
-<p>　　phpStudy集成最新的Apache+Nginx+IIS+Lighttpd+PHP+MySQL+phpMyAdmin+SQL-Front+Zend Loader，一次性安装，无须配置即可使用，是非常方便、好用的PHP调试环境。该程序绿色小巧简易迷你，有专门的控制面板。总之学习PHP只需一个包。对学习PHP的新手来说，WINDOWS下环境配置是一件很困难的事；对老手来说也是一件烦琐的事。因此无论你是新手还是老手，该程序包都是一个不错的选择。
-本程序纯绿色使用完全免费，自由复制传播。版权所有 <a href="http://www.phpstudy.net/" target="_blank">www.phpstudy.net</a></p>
-</div>
+    
 
 </div>
 </body>
